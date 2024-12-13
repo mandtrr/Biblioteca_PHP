@@ -2,6 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LivroController;
+
+Route::resource('livros', LivroController::class);
+
+// Definir a rota para listar livros
+Route::get('/livros', [LivroController::class, 'index'])->name('livros.index');
+
+// Definir a rota para exibir detalhes de um livro específico
+Route::get('/livros/{id}', [LivroController::class, 'show'])->name('livros.show');
 
 Route::get('/', function () {
     return view('welcome');

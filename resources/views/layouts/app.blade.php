@@ -14,9 +14,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900"> <!-- Adicionando fundo claro e escuro -->
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900"> <!-- Garantindo que o conteúdo ocupe toda a altura da tela -->
+            @include('layouts.navigation') <!-- Incluindo a navegação -->
 
             <!-- Page Heading -->
             @isset($header)
@@ -28,8 +28,8 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md"> <!-- Melhorando o espaçamento do conteúdo e fundo -->
+                @yield('content') <!-- Aqui será injetado o conteúdo das páginas -->
             </main>
         </div>
     </body>
