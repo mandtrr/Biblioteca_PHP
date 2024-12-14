@@ -13,13 +13,9 @@ class LivroController extends Controller
      */
     public function index()
     {
-       // Recupera todos os livros da tabela 'livros'
-       $livros = Livro::with('autor')->get();  // 'autor' é a relação que você definiu no modelo Livro
-
-       return view('livros.index', compact('livros'));
-       
-        $livros = Livro::with('autor')->get();
-        return view('livros.index', compact('livros'));
+        // Recupera todos os livros da tabela 'livros' com os autores associados
+        $livros = Livro::with('autor')->get();  // 'autor' é a relação que você definiu no modelo Livro
+        return view('livros.index', compact('livros')); // Passa os livros para a view
     }
 
     /**
@@ -43,8 +39,8 @@ class LivroController extends Controller
      */
     public function show(string $id)
     {
-        $livro = Livro::findOrFail($id);
-        return view('livros.show', compact('livro'));
+        $livro = Livro::findOrFail($id);  // Busca o livro específico
+        return view('livros.show', compact('livro'));  // Passa o livro para a view
     }
 
     /**

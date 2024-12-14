@@ -8,6 +8,6 @@ class Livro extends Model
 {
     public function autor()
 {
-    return $this->belongsTo(Autor::class);
+    return $this->belongsTo(Autor::class, 'autor_id'); // A chave estrangeira 'autor_id'
 }
 }
