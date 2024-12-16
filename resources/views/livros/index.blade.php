@@ -19,7 +19,7 @@
                 @foreach ($livros as $livro)
                     <tr class="border-b hover:bg-gray-100">
                         <td class="px-4 py-2">{{ $livro->titulo }}</td>
-                        <td class="px-4 py-2">{{ $livro->titulo }}</td>
+                        <td>{{ $livro->autor->nome }} {{ $livro->autor->apelido }}</td>                   
                         <td class="px-4 py-2">{{ $livro->genero }}</td>
                         <td class="px-4 py-2">
                             <a href="{{ route('livros.show', $livro->id) }}" class="text-blue-500 hover:text-blue-700">Ver</a>

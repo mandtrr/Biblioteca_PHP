@@ -11,7 +11,7 @@ class AutorSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
         Autor::create(['Nome' => 'Jorge', 'Apelido' => 'Amado', 'Pais' => 'Brasil']);
         Autor::create(['Nome' => 'Machado', 'Apelido' => 'de Assis', 'Pais' => 'Brasil']);
