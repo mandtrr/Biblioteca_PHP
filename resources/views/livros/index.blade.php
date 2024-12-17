@@ -4,7 +4,13 @@
 
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-semibold mb-4">Lista de Livros</h1>
-        
+        <form action="{{ route('livros.search') }}" method="GET" class="mb-5">
+        <input type="text" name="titulo" placeholder="Pesquisar por título" value="{{ request('titulo') }}">
+        <input type="text" name="autor" placeholder="Pesquisar por autor" value="{{ request('autor') }}">
+        <input type="text" name="genero" placeholder="Pesquisar por gênero" value="{{ request('genero') }}">
+        <button type="submit">Pesquisar</button>
+        </form>
+
         <!-- Tabela para exibir os livros -->
         <table class="min-w-full table-auto bg-white border-collapse rounded-lg shadow-lg">
             <thead>

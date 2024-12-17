@@ -11,7 +11,7 @@ class Autor extends Model
     
     public function livros()
 {
-    return $this->hasMany(Livro::class);
+    return $this->hasMany(Livro::class, 'autor_id');
 }
 }
 

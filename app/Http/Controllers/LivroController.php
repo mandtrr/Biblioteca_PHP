@@ -66,4 +66,10 @@ class LivroController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+{
+    return "Método search chamado com sucesso!";
+}
+
 }
