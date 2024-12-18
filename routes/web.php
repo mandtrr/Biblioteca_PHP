@@ -9,6 +9,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/livros/create', [LivroController::class, 'create'])->name('livros.create');
+Route::post('/livros', [LivroController::class, 'store'])->name('livros.store');
+
+// Rota para exibir o formulário de edição
+Route::get('/livros/{id}/edit', [LivroController::class, 'edit'])->name('livros.edit');
+
+// Rota para salvar as alterações
+Route::put('/livros/{id}', [LivroController::class, 'update'])->name('livros.update');
+
+//Deletar livro
+Route::delete('/livros/{id}', [LivroController::class, 'destroy'])->name('livros.destroy');
+
+
+
 // Dashboard (opcional, caso use autenticação)
 Route::get('/dashboard', function () {
     return view('dashboard');
