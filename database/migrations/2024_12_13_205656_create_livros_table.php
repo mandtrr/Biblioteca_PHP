@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('idioma');
             $table->string('isbn')->unique();
             $table->integer('ano');
-            $table->text('observacoes')->nullable();
+            $table->text('historia')->nullable();
             $table->foreignId('autor_id')->constrained('autores')->onDelete('cascade');
             $table->timestamps();
         });

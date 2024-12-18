@@ -33,6 +33,24 @@ class LivroController extends Controller
         if ($request->filled('genero')) {
             $query->where('genero', 'like', '%' . $request->input('genero') . '%');
         }
+
+            // Filtro de ordenação
+    if ($request->filled('ordem')) {
+        switch ($request->ordem) {
+            case 'titulo':
+                $query->orderBy('titulo', 'asc');
+                break;
+            case 'titulo_desc':
+                $query->orderBy('titulo', 'desc');
+                break;
+            case 'ano':
+                $query->orderBy('ano', 'asc');
+                break;
+            case 'ano_desc':
+                $query->orderBy('ano', 'desc');
+                break;
+        }
+    }
     
         // Paginação sem o método withQueryString
         $livros = $query->paginate(10);
@@ -55,15 +73,32 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $messages = [
+            'titulo.required' => 'O título é obrigatório.',
+            'genero.required' => 'O gênero é obrigatório.',
+            'idioma.required' => 'O idioma é obrigatório.',
+            'isbn.required' => 'O ISBN é obrigatório.',
+            'isbn.unique' => 'O ISBN informado já está registrado.',
+            'ano.required' => 'O ano de publicação é obrigatório.',
+            'ano.integer' => 'O ano deve ser um número inteiro.',
+            'ano.min' => 'O ano deve ser um número positivo.',
+            'autor_id.required_without' => 'Selecione um autor existente ou insira um novo autor.',
+            'novo_autor_nome.required_if' => 'O nome do novo autor é obrigatório.',
+            'novo_autor_apelido.required_if' => 'O sobrenome do novo autor é obrigatório.',
+            'capa.image' => 'A capa deve ser uma imagem válida.',
+            'capa.mimes' => 'A capa deve estar em um dos formatos: jpeg, png, jpg ou gif.',
+            'capa.max' => 'O tamanho máximo para a capa é de 2MB.',
+        ];
+
+        $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'idioma' => 'required|string|max:255',
-            'isbn' => 'required|string|max:13|unique:livros,isbn',
-            'ano' => 'required|integer|min:0',
+            'isbn' => 'required|string|unique:livros,isbn|max:13',
+            'ano' => 'required|integer|digits:4',
             'observacoes' => 'nullable|string',
+            'autor_id' => 'required_without:novo_autor_nome,novo_autor_apelido|exists:autores,id',
             'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'autor_opcao' => 'required|in:existente,novo', // Valida a opção de autor
         ]);
     
         // Verificar se é um autor existente ou um novo autor
@@ -127,28 +162,37 @@ class LivroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-    // Validação dos campos
-    $data = $request->validate([
-        'titulo' => 'required|string|max:255',
-        'genero' => 'required|string|max:255',
-        'idioma' => 'required|string|max:255',
-        'isbn' => 'required|string|max:13|unique:livros,isbn,' . $id,
-        'ano' => 'required|integer|min:0',
-        'observacoes' => 'nullable|string',
-        'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'autor_id' => 'required|exists:autores,id', // Autor deve existir
-    ]);
-
-    $livro = Livro::findOrFail($id); // Busca o livro pelo ID
-
-    // Atualizar a capa, se enviada
-    if ($request->hasFile('capa')) {
-        $data['capa'] = $request->file('capa')->store('capas', 'public');
-    }
-
-    $livro->update($data); // Atualiza o livro com os dados validados
-
-    return redirect()->route('livros.index')->with('success', 'Livro atualizado com sucesso!');
+        // Validação dos campos
+        $data = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'genero' => 'required|string|max:255',
+            'idioma' => 'required|string|max:255',
+            'isbn' => "required|string|max:13|unique:livros,isbn,{$id}", // ISBN deve ser único, ignorando o registro atual
+            'ano' => 'required|integer|min:0',
+            'observacoes' => 'nullable|string',
+            'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'autor_id' => 'required|exists:autores,id', // Autor deve existir
+        ]);
+    
+        // Buscar o livro pelo ID ou retornar 404
+        $livro = Livro::findOrFail($id);
+    
+        // Se uma nova capa for enviada, substitui a antiga
+        if ($request->hasFile('capa')) {
+            // Excluir a capa antiga, se existir
+            if ($livro->capa && Storage::disk('public')->exists($livro->capa)) {
+                Storage::disk('public')->delete($livro->capa);
+            }
+    
+            // Armazenar a nova capa
+            $data['capa'] = $request->file('capa')->store('capas', 'public');
+        }
+    
+        // Atualizar o livro com os dados validados
+        $livro->update($data);
+    
+        // Redirecionar com mensagem de sucesso
+        return redirect()->route('livros.index')->with('success', 'Livro atualizado com sucesso!');
     }
 
     /**

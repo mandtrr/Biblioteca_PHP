@@ -12,7 +12,7 @@ class Livro extends Model
         'idioma',
         'isbn',
         'ano',
-        'observacoes',
+        'historia',
         'capa',
         'autor_id',
     ];
