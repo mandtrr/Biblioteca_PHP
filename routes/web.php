@@ -21,17 +21,15 @@ Route::prefix('livros')->group(function () {
     Route::get('/{id}', [LivroController::class, 'show'])->name('livros.show'); // Detalhes do livro
 });
 
-// Dashboard (com autenticação)
+// Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 // Rotas de Perfil de Usuário
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // Requer autenticação para rotas adicionais
 require __DIR__.'/auth.php';

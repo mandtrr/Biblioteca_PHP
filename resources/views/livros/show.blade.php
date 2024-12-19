@@ -37,7 +37,7 @@
                     <p class="text-lg text-justify"><strong>Idioma:</strong> {{ $livro->idioma }}</p>
                     <p class="text-lg text-justify"><strong>ISBN:</strong> {{ $livro->isbn }}</p>
                     <p class="text-lg text-justify"><strong>Ano de Publicação:</strong> {{ $livro->ano }}</p>
-                    <p class="text-lg text-justify"><strong>História:</strong> 
+                    <p class="text-lg text-justify"><strong>Sobre o livro:</strong> 
                         {{ $livro->historia ? $livro->historia : 'Sem história' }}
                     </p>
                 </div>

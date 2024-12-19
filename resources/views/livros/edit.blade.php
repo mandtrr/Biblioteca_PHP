@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
+@auth
+@if (Auth::user()->role === 'admin')
     <div class="container mx-auto flex justify-center items-center min-h-screen">
         <div class="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Editar Livro</h1>
@@ -78,5 +79,10 @@
             </form>
         </div>
     </div>
-
+    @else
+        <div class="text-center mt-10">
+            <p class="text-red-700 font-bold text-7xl">Acesso Negado</p>
+        </div>
+        @endif
+    @endauth
 @endsection
