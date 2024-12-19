@@ -4,10 +4,8 @@
 
     <div class="container mx-auto p-6 flex justify-center items-center min-h-screen">
         <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
-            <!-- Título Centralizado -->
             <h1 style="font-family: 'Mansalva'" class="text-center mb-8 text-gray-800 text-6xl">{{ $livro->titulo }}</h1>
 
-            <!-- Conteúdo Dividido em Colunas -->
             <div class="flex flex-col md:flex-row items-center">
                 <!-- Imagem do Livro -->
                 <div class="flex-shrink-0">
@@ -24,7 +22,6 @@
                     @endif
                 </div>
 
-                <!-- Informações do Livro -->
                 <div class="ml-0 md:ml-8 mt-6 md:mt-0 flex-grow text-gray-700 text-center">
                     <p class="text-lg text-justify"><strong>Autor(a):</strong> 
                         @if ($livro->autor)

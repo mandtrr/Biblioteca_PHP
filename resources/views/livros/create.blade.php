@@ -7,6 +7,16 @@
                 <div class="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg">
                     <h1 style="font-family: 'Mansalva'" class="text-5xl text-center mb-6 text-gray-800">Adicionar Livro</h1>
 
+                    @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <ul class="list-disc ml-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                    </div>
+                    @endif
+
                     <!-- Formulário para Adicionar Livro -->
                     <form action="{{ route('livros.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
