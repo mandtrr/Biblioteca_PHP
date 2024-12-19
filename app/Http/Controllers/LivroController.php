@@ -73,44 +73,29 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            'titulo.required' => 'O título é obrigatório.',
-            'genero.required' => 'O gênero é obrigatório.',
-            'idioma.required' => 'O idioma é obrigatório.',
-            'isbn.required' => 'O ISBN é obrigatório.',
-            'isbn.unique' => 'O ISBN informado já está registrado.',
-            'ano.required' => 'O ano de publicação é obrigatório.',
-            'ano.integer' => 'O ano deve ser um número inteiro.',
-            'ano.min' => 'O ano deve ser um número positivo.',
-            'autor_id.required_without' => 'Selecione um autor existente ou insira um novo autor.',
-            'novo_autor_nome.required_if' => 'O nome do novo autor é obrigatório.',
-            'novo_autor_apelido.required_if' => 'O sobrenome do novo autor é obrigatório.',
-            'capa.image' => 'A capa deve ser uma imagem válida.',
-            'capa.mimes' => 'A capa deve estar em um dos formatos: jpeg, png, jpg ou gif.',
-            'capa.max' => 'O tamanho máximo para a capa é de 2MB.',
-        ];
-
-        $validated = $request->validate([
+        $data = $request->validate([
             'titulo' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'idioma' => 'required|string|max:255',
-            'isbn' => 'required|string|unique:livros,isbn|max:13',
-            'ano' => 'required|integer|digits:4',
+            'isbn' => 'required|string|max:13|unique:livros',
+            'ano' => 'required|integer|min:0',
             'observacoes' => 'nullable|string',
-            'autor_id' => 'required_without:novo_autor_nome,novo_autor_apelido|exists:autores,id',
             'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'autor_opcao' => 'required', // autor_opcao deve ser enviado
+            'autor_id' => 'nullable|exists:autores,id',
+            'novo_autor_nome' => 'nullable|string|max:255',
+            'novo_autor_apelido' => 'nullable|string|max:255',
+            'novo_autor_pais' => 'nullable|string|max:255',
         ]);
     
         // Verificar se é um autor existente ou um novo autor
-        if ($request->input('autor_opcao') === 'novo') {
-            // Validar os campos do novo autor
+        if ($data['autor_opcao'] === 'novo') {
             $novoAutor = $request->validate([
                 'novo_autor_nome' => 'required|string|max:255',
                 'novo_autor_apelido' => 'nullable|string|max:255',
                 'novo_autor_pais' => 'nullable|string|max:255',
             ]);
     
-            // Criar o novo autor
             $autor = Autor::create([
                 'nome' => $novoAutor['novo_autor_nome'],
                 'apelido' => $novoAutor['novo_autor_apelido'],
@@ -119,18 +104,17 @@ class LivroController extends Controller
     
             $data['autor_id'] = $autor->id; // Associar o novo autor ao livro
         } else {
-            // Validar se o autor existente foi selecionado
-            $data['autor_id'] = $request->validate([
-                'autor_id' => 'required|exists:autores,id',
-            ])['autor_id'];
+            $data['autor_id'] = $request->input('autor_id');
         }
     
-        // Processar o upload da capa, se enviada
+        // Processar o upload da capa
         if ($request->hasFile('capa')) {
             $data['capa'] = $request->file('capa')->store('capas', 'public');
+        } else {
+            $data['capa'] = null;
         }
     
-        // Criar o livro na base de dados
+        // Criar o livro
         Livro::create($data);
     
         return redirect()->route('livros.index')->with('success', 'Livro adicionado com sucesso!');

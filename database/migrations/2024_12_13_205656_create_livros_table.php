@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('isbn')->unique();
             $table->integer('ano');
             $table->text('historia')->nullable();
+            $table->string('capa')->nullable();
             $table->foreignId('autor_id')->constrained('autores')->onDelete('cascade');
             $table->timestamps();
         });

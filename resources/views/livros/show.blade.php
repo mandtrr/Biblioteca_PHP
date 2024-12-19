@@ -48,6 +48,8 @@
                 <a href="{{ route('livros.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Voltar
                 </a>
+                @auth
+                @if (Auth::user()->role === 'admin')
                 <form action="{{ route('livros.destroy', $livro->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
@@ -56,6 +58,10 @@
                         Remover Livro
                     </button>
                 </form>
+                @else
+                   
+        @endif
+        @endauth
             </div>
         </div>
     </div>
