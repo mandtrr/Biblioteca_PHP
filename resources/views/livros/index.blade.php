@@ -4,21 +4,20 @@
 
     <div class="container mx-auto p-6">
 
-        <!-- Pesquisa e Filtro no Canto Direito -->
         <div class="flex justify-between items-center mb-6">
-            <div><h1 class="text-4xl font-bold text-center text-gray-800">Estante</h1></div> <!-- Espaço vazio para alinhar o formulário à direita -->
+            <div><h1 style="font-family: 'Mansalva'" class="text-5xl text-center text-gray-700">Biblioteca da Amanda</h1></div> 
             
-            <div class="flex gap-4">
+            <div class="flex gap-4 text-s">
                 <!-- Formulário de Pesquisa -->
                 <form action="{{ route('livros.index') }}" method="GET" class="flex gap-4">
                     <input type="text" name="titulo" placeholder="Pesquisar por título" value="{{ request('titulo') }}"
-                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-blue-500">
+                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-gray-400">
                     <input type="text" name="autor" placeholder="Pesquisar por autor" value="{{ request('autor') }}"
-                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-blue-500">
+                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-gray-400">
                     <input type="text" name="genero" placeholder="Pesquisar por gênero" value="{{ request('genero') }}"
-                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-blue-500">
+                           class="border border-gray-300 rounded-lg p-3 w-48 focus:ring-2 focus:ring-gray-400">
                     <button type="submit"
-                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                            class="bg-gray-400 text-white px-6 py-3 rounded-lg hover:bg-gray-500 transition">
                         Pesquisar
                     </button>
                 </form>
@@ -37,10 +36,9 @@
             </div>
         </div>
 
-        <!-- Tabela para exibir os livros -->
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white rounded-lg shadow-md">
-                <thead class="bg-gray-700 text-white">
+                <thead class="bg-gray-400 text-white">
                     <tr>
                         <th class="px-6 py-3 text-left text-lg font-semibold uppercase">Título</th>
                         <th class="px-6 py-3 text-left text-lg font-semibold uppercase">Autor</th>
@@ -65,13 +63,13 @@
                             <td class="px-6 py-4 text-gray-700">{{ $livro->idioma }}</td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('livros.show', $livro->id) }}"
-                                   class="text-blue-600 hover:text-blue-800 font-medium">
+                                   class="text-gray-400 hover:text-gray-900 font-medium">
                                     Ver mais
                                 </a>
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('livros.edit', $livro->id) }}"
-                                   class="text-blue-600 hover:text-blue-800 font-medium">
+                                   class="text-gray-400 hover:text-gray-900 font-medium">
                                     Editar
                                 </a>
                             </td>

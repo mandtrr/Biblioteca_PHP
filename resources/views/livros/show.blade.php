@@ -5,7 +5,7 @@
     <div class="container mx-auto p-6 flex justify-center items-center min-h-screen">
         <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
             <!-- Título Centralizado -->
-            <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">{{ $livro->titulo }}</h1>
+            <h1 style="font-family: 'Mansalva'" class="text-center mb-8 text-gray-800 text-6xl">{{ $livro->titulo }}</h1>
 
             <!-- Conteúdo Dividido em Colunas -->
             <div class="flex flex-col md:flex-row items-center">
@@ -26,7 +26,7 @@
 
                 <!-- Informações do Livro -->
                 <div class="ml-0 md:ml-8 mt-6 md:mt-0 flex-grow text-gray-700 text-center">
-                    <p class="text-lg text-justify"><strong>Autor:</strong> 
+                    <p class="text-lg text-justify"><strong>Autor(a):</strong> 
                         @if ($livro->autor)
                             {{ $livro->autor->nome }} {{ $livro->autor->apelido }}
                         @else
@@ -45,7 +45,7 @@
 
             <!-- Botões -->
             <div class="flex justify-between mt-8">
-                <a href="{{ route('livros.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <a href="{{ route('livros.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
                     Voltar
                 </a>
                 @auth
