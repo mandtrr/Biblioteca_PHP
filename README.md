@@ -1,5 +1,7 @@
 # Projeto PHP
 Aplicação web para a gestão e consulta de livros de uma biblioteca
+
+- Acesse: http://127.0.0.1:8000/livros
  
 - Página principal
  É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
