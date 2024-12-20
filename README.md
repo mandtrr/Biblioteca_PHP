@@ -1,10 +1,27 @@
 # Projeto PHP
 Aplicação web para a gestão e consulta de livros de uma biblioteca
 
+Como visualizar a aplicação localmente:
+1. Requisitos
+- PHP
+- Composer
+- Node.js
+- MySQL
+- XAMPP
+
+2. Configurações da aplicação:
+- Clone o Repositório
+- Instale o composer com o comando: composer install
+- Instale o Tailwind com o comando: npm install  npm run build
+- Inicie o servidor com o comando: php artisan serve
 - Acesse: http://127.0.0.1:8000/livros
- 
-- Página principal
- É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
+
+3. Login na aplicação:
+- Todos os usuários são criados com o role de user
+- Pode alterar o role para admin no php myadmin
+
+Página principal
+- É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
 ![Screenshot da aplicação](./imagens/inicial.png)
 
 - Na lista também é possível ver mais informações sobre o livro desejado, como a capa do livro, e é possível remover o livro; 
