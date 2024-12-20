@@ -24,7 +24,7 @@ Página principal
 - É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
 ![Screenshot da aplicação](./imagens/inicial.png)
 
-- Na lista também é possível ver mais informações sobre o livro desejado, como a capa do livro, e é possível remover o livro; 
+- Na lista também é possível ver mais informações sobre o livro desejado, a capa do livro, ver os livros relacionados (por gênero) e é possível remover o livro; 
 ![Screenshot da aplicação](./imagens/detalhes.png)
 
 - Porém só administradores podem remover um livro. Se for apenas user, o botão não irá aparecer;
