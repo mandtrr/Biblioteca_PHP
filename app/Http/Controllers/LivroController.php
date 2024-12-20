@@ -57,6 +57,7 @@ class LivroController extends Controller
     
         // Paginação sem o método withQueryString
         $livros = $query->paginate(10);
+
     
         
         return view('livros.index', compact('livros'))->with('filters', $request->all());

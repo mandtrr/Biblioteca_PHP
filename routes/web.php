@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LivroController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AutorController;
 
 // Página inicial
 Route::get('/', function () {
@@ -30,6 +31,9 @@ Route::get('/dashboard', function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+// Rota para exibir a lista de autores
+Route::get('/autores', [AutorController::class, 'index'])->name('autores.index');
 
 // Requer autenticação para rotas adicionais
 require __DIR__.'/auth.php';
