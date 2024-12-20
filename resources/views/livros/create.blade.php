@@ -73,8 +73,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="observacoes" class="block text-gray-700 font-bold">Sobre o livro:</label>
-                            <textarea name="observacoes" id="observacoes" rows="3" class="w-full border rounded p-3 focus:ring-2 focus:ring-gray-500"></textarea>
+                            <label for="historia" class="block text-gray-700 font-bold">Sobre o livro:</label>
+                            <textarea name="historia" id="historia" rows="3" class="w-full border rounded p-3 focus:ring-2 focus:ring-gray-500"></textarea>
                         </div>
 
                         <div class="mb-4">

@@ -24,11 +24,14 @@ class LivroController extends Controller
         }
     
         if ($request->filled('autor')) {
-            $query->whereHas('autor', function ($q) use ($request) {
-                $q->where('nome', 'like', '%' . $request->input('autor') . '%')
-                  ->orWhere('apelido', 'like', '%' . $request->input('autor') . '%');
+            $autorPesquisa = '%' . $request->input('autor') . '%';
+        
+            $query->whereHas('autor', function ($q) use ($autorPesquisa) {
+                $q->whereRaw("CONCAT(nome, ' ', apelido) LIKE ?", [$autorPesquisa]) // Pesquisa pelo nome completo
+                  ->orWhere('nome', 'like', $autorPesquisa) // Pesquisa apenas pelo nome
+                  ->orWhere('apelido', 'like', $autorPesquisa); // Pesquisa apenas pelo apelido
             });
-        }
+        }        
     
         if ($request->filled('genero')) {
             $query->where('genero', 'like', '%' . $request->input('genero') . '%');
@@ -94,7 +97,7 @@ class LivroController extends Controller
             'idioma' => 'required|string|max:255',
             'isbn' => 'required|string|max:13|unique:livros',
             'ano' => 'required|integer|min:0',
-            'observacoes' => 'nullable|string',
+            'historia' => 'nullable|string',
             'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'autor_opcao' => 'required',
             'autor_id' => 'nullable|exists:autores,id',
@@ -141,9 +144,15 @@ class LivroController extends Controller
      */
     public function show(string $id)
     {
-        
         $livro = Livro::with('autor')->findOrFail($id);
-        return view('livros.show', compact('livro'));  // Passa o livro para a view
+
+        // Encontrar livros relacionados pelo mesmo gênero, excluindo o livro atual
+        $livrosRelacionados = Livro::where('genero', $livro->genero)
+            ->where('id', '!=', $livro->id)
+            ->take(5) // Limitar a 5 livros
+            ->get();
+    
+        return view('livros.show', compact('livro', 'livrosRelacionados'));
     }
 
     /**
@@ -185,7 +194,7 @@ class LivroController extends Controller
         'idioma' => 'required|string|max:255',
         'isbn' => "required|string|max:13|unique:livros,isbn,{$id}",
         'ano' => 'required|integer|min:0',
-        'observacoes' => 'nullable|string',
+        'historia' => 'nullable|string',
         'capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'autor_id' => 'required|exists:autores,id',
     ], $messages);
@@ -228,9 +237,5 @@ class LivroController extends Controller
         return redirect()->route('livros.index')->with('success', 'Livro removido com sucesso!');
     }
     
-
-    public function search(Request $request)
-{
-}
 
 }

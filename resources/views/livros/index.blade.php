@@ -5,8 +5,10 @@
     <div class="container mx-auto p-6">
 
         <div class="flex justify-between items-center mb-6">
-            <div><h1 style="font-family: 'Mansalva'" class="text-5xl text-center text-gray-700">Biblioteca da Amanda</h1></div> 
-            
+        <div>
+        <h2 style="font-family: 'Mansalva'" class="text-5xl text-center text-gray-400">Biblioteca da Amanda</h2>
+        </div>
+
             <div class="flex gap-4 text-s">
                 <!-- Formulário de Pesquisa -->
                 <form action="{{ route('livros.index') }}" method="GET" class="flex gap-4">
@@ -78,11 +80,16 @@
                 </tbody>
             </table>
         </div>
+        <!-- Paginação e Contagem -->
+        <div class="mt-6 flex justify-between items-center">
+            <div class="text-gray-600 text-lg">
+                Total de Livros: {{ $livros->total() }}
+            </div>
+            <div>
+                {{ $livros->appends(request()->query())->links('pagination::tailwind') }}
+            </div>
+    </div>
 
-        <!-- Paginação -->
-        <div class="mt-6 flex justify-end">
-            {{ $livros->appends(request()->query())->links('pagination::tailwind') }}
-        </div>
     </div>
 
 @endsection
