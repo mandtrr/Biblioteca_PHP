@@ -19,9 +19,9 @@ Como visualizar a aplicação localmente:
 3. Login na aplicação:
 - Todos os usuários são criados com o role de user
 - Pode alterar o role para admin no php myadmin
- 
-- Página principal
- É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
+
+Página principal
+- É possível verificar a lista com os livros, com paginação, é possível pesquisar por nome do autor, título ou gênero do livro, e também é possível ordenar ordem alfabética ou ano de publicação;
 ![Screenshot da aplicação](./imagens/inicial.png)
 
 - Na lista também é possível ver mais informações sobre o livro desejado, como a capa do livro, e é possível remover o livro; 
